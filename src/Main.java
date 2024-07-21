@@ -16,5 +16,11 @@ public class Main {
         String[] saves = { save1, save2, save3 };
         saver.zipFiles("zip.zip", saves);
         saver.clearSaveFolder(saves);
+
+        Loader loader = new Loader("E:\\Games\\savegames\\");
+        loader.openZip("zip.zip", "E:\\Games\\savegames\\");
+
+        GameProgress gameProgressLoaded = loader.openProgress("save2.dat");
+        System.out.println(gameProgressLoaded.toString());
     }
 }
