@@ -4,16 +4,24 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 
 public class Installer {
-    private final String ROOT = "E:\\Games";
-    private final String[] DIRS_LIST = { "\\src", "\\src\\main", "\\src\\test", "\\res", "\\res\\drawables", "\\res\\vectors", "\\res\\icons", "\\savegames", "\\temp" };
+    private final String root;
+    private final String[] FOLDERS_LIST = { "\\src", "\\src\\main", "\\src\\test", "\\res", "\\res\\drawables", "\\res\\vectors", "\\res\\icons", "\\savegames", "\\temp" };
     private final String[] FILES_LIST = { "\\src\\main\\Main.java", "\\src\\main\\Utils.java" };
+
+    public Installer(String root) {
+        this.root = root;
+    }
+
+    public String getRoot() {
+        return root;
+    }
 
     public void install() {
         StringBuilder logs = new StringBuilder();
 
         // создадем каталоги
-        for (String item : DIRS_LIST) {
-            File dir = new File(ROOT + item);
+        for (String item : FOLDERS_LIST) {
+            File dir = new File(root + item);
             LocalDateTime curDateTime = LocalDateTime.now();
             if (dir.mkdir()) {
                 String log = curDateTime + " [INFO]: Каталог " + dir.getName() + " успешно создан\n";
@@ -26,7 +34,7 @@ public class Installer {
 
         // создаем файлы
         for (String item : FILES_LIST) {
-            File file = new File(ROOT + item);
+            File file = new File(root + item);
             LocalDateTime curDateTime = LocalDateTime.now();
             try {
                 if (file.createNewFile()) {
@@ -39,7 +47,7 @@ public class Installer {
             }
         }
 
-        try (FileOutputStream fos = new FileOutputStream(ROOT + "\\temp\\temp.txt")) {
+        try (FileOutputStream fos = new FileOutputStream(root + "\\temp\\temp.txt")) {
             byte[] bytes = logs.toString().getBytes();
             fos.write(bytes, 0, bytes.length);
         } catch (IOException e) {

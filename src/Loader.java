@@ -5,14 +5,8 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 public class Loader {
-    private final String saveFolder;
-
-    public Loader(String saveFolder) {
-        this.saveFolder = saveFolder;
-    }
-
     public void openZip(String file, String folder) {
-        try (ZipInputStream zin = new ZipInputStream(new FileInputStream(saveFolder + file))) {
+        try (ZipInputStream zin = new ZipInputStream(new FileInputStream(file))) {
             ZipEntry entry;
             String name;
             while ((entry = zin.getNextEntry()) != null) {
@@ -34,7 +28,7 @@ public class Loader {
     public GameProgress openProgress(String file) {
         GameProgress gameProgress = null;
 
-        try (FileInputStream fis = new FileInputStream(saveFolder + file)) {
+        try (FileInputStream fis = new FileInputStream(file)) {
             ObjectInputStream ois = new ObjectInputStream(fis);
             gameProgress = (GameProgress) ois.readObject();
         } catch (Exception e) {
